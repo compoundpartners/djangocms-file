@@ -1,5 +1,5 @@
 {
-    "package-name": "djangocms-file",
+    "package-name": "js-file",
     "installed-apps": [
         "djangocms_file"
     ]
