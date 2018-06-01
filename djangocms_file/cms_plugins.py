@@ -5,31 +5,20 @@ from django.utils.translation import ugettext_lazy as _
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
-from .constants import USE_LINK_ICONS
 from .models import File, Folder
-from .forms import Bootstrap4LinkForm
 
 
 class FilePlugin(CMSPluginBase):
     model = File
-    name = _('File DEV')
-    #form = Bootstrap4LinkForm
-    #change_form_template = 'djangocms_bootstrap4/admin/link.html'
+    name = _('File')
     text_enabled = True
-
-    fields = (
-        'file_src',
-        'file_name',
-    )
-
-    if USE_LINK_ICONS:
-        fields = fields + (
-            ('icon_left', 'icon_right'),
-        )
 
     fieldsets = [
         (None, {
-            'fields': fields
+            'fields': (
+                'file_src',
+                'file_name',
+            )
         }),
         (_('Advanced settings'), {
             'classes': ('collapse',),
