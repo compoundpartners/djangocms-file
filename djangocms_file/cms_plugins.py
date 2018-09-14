@@ -1,23 +1,30 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
+
 from django.utils.translation import ugettext_lazy as _
 
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
 
+from .helpers import concat_classes
 from .models import File, Folder
+from .forms import FileForm
 
 
 class FilePlugin(CMSPluginBase):
     model = File
+    form = FileForm
     name = _('File')
+    change_form_template = 'djangocms_file/admin/link.html'
     text_enabled = True
 
     fieldsets = [
         (None, {
             'fields': (
                 'file_src',
-                'file_name',
+                ('name', 'link_type'),
+                ('link_context'),
+                ('link_size', 'link_outline'),
+                ('link_block', 'show_file_size'),
             )
         }),
         (_('Advanced settings'), {
@@ -25,7 +32,6 @@ class FilePlugin(CMSPluginBase):
             'fields': (
                 'template',
                 ('link_target', 'link_title'),
-                'show_file_size',
                 'attributes',
             )
         }),
@@ -33,6 +39,35 @@ class FilePlugin(CMSPluginBase):
 
     def get_render_template(self, context, instance, placeholder):
         return 'djangocms_file/{}/file.html'.format(instance.template)
+
+    def render(self, context, instance, placeholder):
+        link_classes = []
+        if instance.link_context:
+            if instance.link_type == 'link':
+                link_classes.append('text-{}'.format(instance.link_context))
+            else:
+                link_classes.append('btn')
+                if not instance.link_outline:
+                    link_classes.append(
+                        'btn-{}'.format(instance.link_context)
+                    );
+                else:
+                    link_classes.append(
+                        'btn-outline-{}'.format(instance.link_context)
+                    );
+        if instance.link_size:
+            link_classes.append(instance.link_size);
+        if instance.link_block:
+            link_classes.append('btn-block');
+
+        classes = concat_classes(link_classes + [
+            instance.attributes.get('class'),
+        ])
+        instance.attributes['class'] = classes
+
+        return super(FilePlugin, self).render(
+            context, instance, placeholder
+        )
 
 
 class FolderPlugin(CMSPluginBase):

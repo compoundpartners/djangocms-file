@@ -57,11 +57,11 @@ class File(CMSPlugin):
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    file_name = models.CharField(
-        verbose_name=_('Name'),
+    name = models.CharField(
+        verbose_name=_('Display name'),
         blank=True,
         max_length=255,
-        help_text=_('Overrides the default file name with the given value.'),
+        help_text=_('Overrides the default file display name with the given value.'),
     )
     link_target = models.CharField(
         verbose_name=_('Link target'),
@@ -71,7 +71,7 @@ class File(CMSPlugin):
         default='',
     )
     link_title = models.CharField(
-        verbose_name=_('Link title'),
+        verbose_name=_('Link title attrubute'),
         blank=True,
         max_length=255,
     )
@@ -81,6 +81,61 @@ class File(CMSPlugin):
         default=False,
         help_text=_('Appends the file size at the end of the name.'),
     )
+
+    LINK_CHOICES = (
+        ('link', _('Link')),
+        ('btn', _('Button')),
+    )
+    link_type = models.CharField(
+        verbose_name=_('Type'),
+        choices=LINK_CHOICES,
+        default=LINK_CHOICES[1][0],  # Button
+        max_length=255,
+        help_text=_('Adds either the .btn-* or .text-* classes.'),
+    )
+
+    COLOR_STYLE_CHOICES = (
+        ('link', _('Link')),
+        ('primary', _('Primary')),
+        ('secondary', _('Secondary')),
+        ('success', _('Success')),
+        ('danger', _('Danger')),
+        ('warning', _('Warning')),
+        ('info', _('Info')),
+        ('light', _('Light')),
+        ('dark', _('Dark')),
+    )
+    link_context = models.CharField(
+        verbose_name=_('Context'),
+        choices=COLOR_STYLE_CHOICES,
+        blank=True,
+        max_length=255,
+    )
+
+    LINK_SIZE_CHOICES = (
+        ('btn-sm', _('Small')),
+        ('', _('Medium')),
+        ('btn-lg', _('Large')),
+    )
+    link_size = models.CharField(
+        verbose_name=_('Size'),
+        choices=LINK_SIZE_CHOICES,
+        blank=True,
+        max_length=255,
+    )
+
+    link_outline = models.BooleanField(
+        verbose_name=_('No background'),
+        default=False,
+        help_text=_('Removes the button background, keeping only a coloured border.'),
+    )
+
+    link_block = models.BooleanField(
+        verbose_name=_('Block'),
+        default=False,
+        help_text=_('Extends the button to the width of its container.'),
+    )
+
     attributes = AttributesField(
         verbose_name=_('Attributes'),
         blank=True,
@@ -103,8 +158,8 @@ class File(CMSPlugin):
         return str(self.pk)
 
     def get_short_description(self):
-        if self.file_src and self.file_name:
-            return self.file_name
+        if self.file_src and self.name:
+            return self.name
         if self.file_src and self.file_src.label:
             return self.file_src.label
         return ugettext('<file is missing>')
