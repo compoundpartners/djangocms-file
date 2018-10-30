@@ -1,3 +1,5 @@
+{% load google_tag_manager_tags %}
+
 <a href="{{ instance.file_src.url }}"
     {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
     {% if instance.link_title %} title="{{ instance.link_title }}"{% endif %}
@@ -24,3 +26,13 @@
     {{ instance.show_file_size }}
     {{ instance.attributes_str }}
 {% endcomment %}
+
+{# Google Tag Manager #}
+<script>
+  dataLayer = [{
+      "eventCategory": "File",
+      "eventAction": "Download",
+      "eventLabel": "{{ instance.file_src }}"
+  }];
+</script>
+{% google_tag_manager %}
