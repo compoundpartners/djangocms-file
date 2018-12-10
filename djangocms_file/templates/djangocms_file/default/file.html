@@ -29,10 +29,11 @@
 
 {# Google Tag Manager #}
 <script>
-  dataLayer = [{
+  var dataLayer = window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
       "eventCategory": "File",
       "eventAction": "Download",
       "eventLabel": "{{ instance.file_src }}"
-  }];
+  });
 </script>
 {% google_tag_manager %}
