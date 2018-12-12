@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from cms.plugin_base import CMSPluginBase
@@ -64,6 +65,10 @@ class FilePlugin(CMSPluginBase):
             instance.attributes.get('class'),
         ])
         instance.attributes['class'] = classes
+
+        # Check if (Aldryn) Google Tag Manager (GTM) is installed, and pass to template
+        if 'aldryn_google_tag_manager' in settings.INSTALLED_APPS:
+            context['gtm_installed'] = True
 
         return super(FilePlugin, self).render(
             context, instance, placeholder

@@ -1,4 +1,6 @@
-{% load google_tag_manager_tags %}
+{% if gtm_installed %}
+    {% load google_tag_manager_tags %}
+{% endif %}
 
 <a href="{{ instance.file_src.url }}"
     {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
@@ -27,13 +29,15 @@
     {{ instance.attributes_str }}
 {% endcomment %}
 
-{# Google Tag Manager #}
-<script>
-  var dataLayer = window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-      "eventCategory": "File",
-      "eventAction": "Download",
-      "eventLabel": "{{ instance.file_src }}"
-  });
-</script>
-{% google_tag_manager %}
+{% if gtm_installed %}
+  {# Google Tag Manager #}
+  <script>
+    var dataLayer = window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+        "eventCategory": "File",
+        "eventAction": "Download",
+        "eventLabel": "{{ instance.file_src }}"
+    });
+  </script>
+  {% google_tag_manager %}
+{% endif %}
