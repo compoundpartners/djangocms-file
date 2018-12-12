@@ -9,7 +9,6 @@ REQUIREMENTS = [
     'django-cms>=3.2.0',
     'django-filer>=1.2.4',
     'djangocms-attributes-field>=0.1.1',
-    'aldryn-google-tag-manager',
 ]
 
 
