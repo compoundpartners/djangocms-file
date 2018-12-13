@@ -8,6 +8,7 @@ from djangocms_file import __version__
 REQUIREMENTS = [
     'django-cms>=3.2.0',
     'django-filer>=1.2.4',
+    'django-friendly-tag-loader==1.3.1',
     'djangocms-attributes-field>=0.1.1',
 ]
 
