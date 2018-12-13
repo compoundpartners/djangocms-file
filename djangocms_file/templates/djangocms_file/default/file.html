@@ -1,5 +1,7 @@
+{% load friendly_loader %}
+
 {% if gtm_installed %}
-    {% load google_tag_manager_tags %}
+    {% friendly_load google_tag_manager_tags %}
 {% endif %}
 
 <a href="{{ instance.file_src.url }}"
@@ -39,5 +41,7 @@
         "eventLabel": "{{ instance.file_src }}"
     });
   </script>
+  {% if_has_tag google_tag_manager %}
   {% google_tag_manager %}
+  {% endif_has_tag %}
 {% endif %}
