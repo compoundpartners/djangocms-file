@@ -7,7 +7,7 @@
 <a href="{{ instance.file_src.url }}"
     {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
     {% if instance.link_title %} title="{{ instance.link_title }}"{% endif %}
-    {{ instance.attributes_str }}>
+    {{ instance.attributes_str }} data-event-type="event" data-event-category="File" data-event-action="Download" data-event-label="{{ instance.file_src }}">
     {% if instance.name %}
         {{ instance.name }}
     {% else %}
