@@ -23,6 +23,8 @@ class FilePlugin(CMSPluginBase):
             'fields': (
                 'file_src',
                 ('name', 'link_type'),
+                'description',
+                'terms',
                 ('link_context'),
                 ('link_size', 'link_outline'),
                 ('link_block', 'show_file_size'),

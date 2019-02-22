@@ -63,6 +63,16 @@ class File(CMSPlugin):
         max_length=255,
         help_text=_('Overrides the default file display name with the given value.'),
     )
+    description = models.TextField(
+        verbose_name=_('Description'),
+        blank=True,
+        default=''
+    )
+    terms = models.TextField(
+        verbose_name=_('Terms'),
+        blank=True,
+        default=''
+    )
     link_target = models.CharField(
         verbose_name=_('Link target'),
         choices=LINK_TARGET,
