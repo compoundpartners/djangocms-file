@@ -9,6 +9,7 @@ from cms.plugin_pool import plugin_pool
 from .helpers import concat_classes
 from .models import File, Folder
 from .forms import FileForm
+from .constants import DEFAULT_TERMS
 
 
 class FilePlugin(CMSPluginBase):
@@ -25,6 +26,7 @@ class FilePlugin(CMSPluginBase):
                 ('name', 'link_type'),
                 'description',
                 'terms',
+                'show_terms',
                 ('link_context'),
                 ('link_size', 'link_outline'),
                 ('link_block', 'show_file_size'),
@@ -71,6 +73,9 @@ class FilePlugin(CMSPluginBase):
         # Check if (Aldryn) Google Tag Manager (GTM) is installed, and pass to template
         if 'aldryn_google_tag_manager' in settings.INSTALLED_APPS:
             context['gtm_installed'] = True
+
+        context['default_terms'] = DEFAULT_TERMS
+
 
         return super(FilePlugin, self).render(
             context, instance, placeholder

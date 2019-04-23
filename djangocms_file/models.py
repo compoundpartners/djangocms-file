@@ -73,6 +73,11 @@ class File(CMSPlugin):
         blank=True,
         default=''
     )
+    show_terms = models.BooleanField(
+        verbose_name=_('Show terms'),
+        blank=True,
+        default=False,
+    )
     link_target = models.CharField(
         verbose_name=_('Link target'),
         choices=LINK_TARGET,

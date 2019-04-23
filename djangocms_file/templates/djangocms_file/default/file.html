@@ -1,9 +1,3 @@
-{% load friendly_loader %}
-
-{% if gtm_installed %}
-    {% friendly_load google_tag_manager_tags %}
-{% endif %}
-
 <a href="{{ instance.file_src.url }}"
     {% if instance.link_target %} target="{{ instance.link_target }}"{% endif %}
     {% if instance.link_title %} title="{{ instance.link_title }}"{% endif %}
@@ -17,31 +11,6 @@
         <span>{{ instance.file_src.size|filesizeformat }}</span>
     {% endif %}
 </a>
-
-{% comment %}
-    # https://github.com/divio/django-filer/blob/master/filer/models/filemodels.py
-    {{ instance.file_src }}
-    {{ instance.file_src.extension }}
-    # Available variables:
-    {{ instance.template }}
-    {{ instance.file_name }}
-    {{ instance.link_target }}
-    {{ instance.link_title }}
-    {{ instance.show_file_size }}
-    {{ instance.attributes_str }}
-{% endcomment %}
-
-{% if gtm_installed %}
-  {# Google Tag Manager #}
-  <script>
-    var dataLayer = window.dataLayer = window.dataLayer || [];
-    dataLayer.push({
-        "eventCategory": "File",
-        "eventAction": "Download",
-        "eventLabel": "{{ instance.file_src }}"
-    });
-  </script>
-  {% if_has_tag google_tag_manager %}
-  {% google_tag_manager %}
-  {% endif_has_tag %}
-{% endif %}
+    {% if instance.show_terms %}
+        <div>{{ instance.terms|default:default_terms }}</div>
+    {% endif %}

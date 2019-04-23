@@ -11,6 +11,10 @@ class Form(forms.BaseForm):
         'List of additional templates (comma separated)',
         required=False,
     )
+    terms = forms.CharField(
+        'Default Terms',
+        required=False,
+    )
 
     def clean(self):
         data = super(Form, self).clean()
@@ -25,5 +29,7 @@ class Form(forms.BaseForm):
                 (item, item)
                 for item in split_and_strip(data['templates'])
             ]
+        if data['terms']:
+            settings['DJANGOCMS_FILE_TERMS'] = data['terms']
 
         return settings
