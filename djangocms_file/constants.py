@@ -11,3 +11,8 @@ DEFAULT_TERMS = getattr(
     'DJANGOCMS_FILE_TERMS',
     '',
 )
+SHOW_CONTEXT = getattr(
+    settings,
+    'DJANGOCMS_FILE_SHOW_CONTEXT',
+    False,
+)

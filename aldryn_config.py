@@ -15,6 +15,11 @@ class Form(forms.BaseForm):
         'Default Terms',
         required=False,
     )
+    show_context = forms.CheckboxField(
+        'Show Context',
+        required=False,
+        initial=False,
+    )
 
     def clean(self):
         data = super(Form, self).clean()
@@ -31,5 +36,7 @@ class Form(forms.BaseForm):
             ]
         if data['terms']:
             settings['DJANGOCMS_FILE_TERMS'] = data['terms']
+        if data['show_context']:
+            settings['DJANGOCMS_FILE_SHOW_CONTEXT'] = int(data['show_context'])
 
         return settings

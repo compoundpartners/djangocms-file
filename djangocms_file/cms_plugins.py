@@ -9,7 +9,7 @@ from cms.plugin_pool import plugin_pool
 from .helpers import concat_classes
 from .models import File, Folder
 from .forms import FileForm
-from .constants import DEFAULT_TERMS
+from .constants import DEFAULT_TERMS, SHOW_CONTEXT
 
 
 class FilePlugin(CMSPluginBase):
@@ -19,18 +19,26 @@ class FilePlugin(CMSPluginBase):
     change_form_template = 'djangocms_file/admin/link.html'
     text_enabled = True
 
+
+    main_fields = (
+        'file_src',
+        ('name', 'link_type'),
+        'description',
+        'terms',
+        'show_terms',
+    )
+    if SHOW_CONTEXT:
+        main_fields += (
+            ('link_context'),
+        )
+    main_fields += (
+        ('link_size', 'link_outline'),
+        ('link_block', 'show_file_size'),
+    )
+
     fieldsets = [
         (None, {
-            'fields': (
-                'file_src',
-                ('name', 'link_type'),
-                'description',
-                'terms',
-                'show_terms',
-                ('link_context'),
-                ('link_size', 'link_outline'),
-                ('link_block', 'show_file_size'),
-            )
+            'fields': main_fields,
         }),
         (_('Advanced settings'), {
             'classes': ('collapse',),
