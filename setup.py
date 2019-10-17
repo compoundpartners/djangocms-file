@@ -34,7 +34,7 @@ CLASSIFIERS = [
 
 
 setup(
-    name='djangocms-file',
+    name='js-file',
     version=__version__,
     description=('Adds file plugin to django CMS'),
     author='Divio AG',
